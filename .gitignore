@@ -1,0 +1,14 @@
+.DS_Store
+.idea
+.vscode
+.env
+node_modules
+/_ds
+/_logs
+/_storage
+/_storage-v1
+/_state
+/local
+eslint-report.html
+.nyc_output
+/coverage
