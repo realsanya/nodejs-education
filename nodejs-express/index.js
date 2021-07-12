@@ -1,5 +1,6 @@
 const express = require('express')
 const path = require('path')
+const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
 const homeRoutes = require('./routes/home')
 const addRoutes = require('./routes/add')
@@ -26,6 +27,15 @@ app.use('/card', cardRoutes)
 
 const PORT = process.env.PORT || 3000
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`)
-})
+
+async function start() {
+  const url = 'mongodb+srv://realsanya:fbHPTbUSOuL8DesX@cluster0.fct0v.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+  await mongoose.connect(url, { useNewUrlParser })
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`)
+  })
+}
+
+start()
+
+
