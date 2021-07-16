@@ -2,6 +2,8 @@ const express = require('express')
 const path = require('path')
 const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
+const Handlebars = require('handlebars')
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 const homeRoutes = require('./routes/home')
 const addRoutes = require('./routes/add')
 const coursesRoutes = require('./routes/courses')
@@ -11,7 +13,8 @@ const app = express()
 
 const hbs = exphbs.create({
   defaultLayout: 'main',
-  extname: 'hbs'
+  extname: 'hbs',
+  handlebars: allowInsecurePrototypeAccess(Handlebars)
 })
 
 app.engine('hbs', hbs.engine)
@@ -29,11 +32,15 @@ const PORT = process.env.PORT || 3000
 
 
 async function start() {
-  const url = 'mongodb+srv://realsanya:fbHPTbUSOuL8DesX@cluster0.fct0v.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-  await mongoose.connect(url, { useNewUrlParser })
-  app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`)
-  })
+  try{
+    const url = 'mongodb+srv://realsanya:fbHPTbUSOuL8DesX@cluster0.fct0v.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+    await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true})
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`)
+    })
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 start()
