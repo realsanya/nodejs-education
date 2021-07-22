@@ -30,11 +30,14 @@ app.use('/card', cardRoutes)
 
 const PORT = process.env.PORT || 3000
 
-
 async function start() {
   try{
     const url = 'mongodb+srv://realsanya:fbHPTbUSOuL8DesX@cluster0.fct0v.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-    await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true})
+    await mongoose.connect(url, { 
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+    })
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`)
     })
